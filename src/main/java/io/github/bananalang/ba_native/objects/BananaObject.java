@@ -62,4 +62,8 @@ public abstract class BananaObject {
     public Map<BananaOperator, BananaMethod> getOperatorOverloads() {
         return Collections.unmodifiableMap(operatorOverloads);
     }
+
+    public static BananaObject getBaseInstance() {
+        return null;
+    }
 }

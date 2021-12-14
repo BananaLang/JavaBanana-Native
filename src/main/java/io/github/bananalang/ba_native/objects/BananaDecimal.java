@@ -5,6 +5,10 @@ public class BananaDecimal extends BananaObject {
 
     public final double value;
 
+    public static BananaDecimal getBaseInstance() {
+        return METHODS;
+    }
+
     /** Method initialization */
     private BananaDecimal() {
         value = 0;

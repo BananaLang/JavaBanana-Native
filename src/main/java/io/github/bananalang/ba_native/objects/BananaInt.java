@@ -20,6 +20,10 @@ public class BananaInt extends BananaObject {
 
     public final BigInteger value;
 
+    public static BananaInt getBaseInstance() {
+        return METHODS;
+    }
+
     /** Method initialization */
     private BananaInt() {
         value = null;
