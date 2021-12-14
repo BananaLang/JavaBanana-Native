@@ -2,6 +2,7 @@ package io.github.bananalang.ba_native.objects;
 
 public class BananaDecimal extends BananaObject {
     private static final BananaDecimal METHODS = new BananaDecimal();
+    public static final BananaDecimal ZERO = METHODS;
 
     public final double value;
 
@@ -15,6 +16,9 @@ public class BananaDecimal extends BananaObject {
         createOperatorOverload(BananaOperator.ADD, this::operatorAdd)
             .addOverload(BananaDecimal.class, BananaDecimal.class)
             .addOverload(BananaDecimal.class, BananaInt.class);
+        createOperatorOverload(BananaOperator.EQUALS, this::operatorEquals)
+            .addOverload(BananaBool.class, BananaDecimal.class)
+            .addOverload(BananaBool.class, BananaInt.class);
     }
 
     protected BananaDecimal(double value) {
@@ -24,6 +28,10 @@ public class BananaDecimal extends BananaObject {
 
     public static BananaDecimal valueOf(double value) {
         return new BananaDecimal(value);
+    }
+
+    public double getValue() {
+        return value;
     }
 
     @Override
@@ -39,6 +47,16 @@ public class BananaDecimal extends BananaObject {
             return valueOf(value + ((BananaDecimal)other).value);
         } else {
             return BananaDecimal.valueOf(value + ((BananaInt)other).value.doubleValue());
+        }
+    }
+
+    protected BananaObject operatorEquals(BananaObject this_, BananaObject[] args) {
+        double value = ((BananaDecimal)this_).value;
+        BananaObject other = args[0];
+        if (other instanceof BananaDecimal) {
+            return BananaBool.valueOf(value == ((BananaDecimal)other).value);
+        } else {
+            return BananaBool.valueOf(value == ((BananaInt)other).value.doubleValue());
         }
     }
 }

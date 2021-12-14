@@ -1,6 +1,7 @@
 package io.github.bananalang.ba_native.objects;
 
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -13,7 +14,7 @@ public abstract class BananaObject {
 
     protected BananaObject() {
         this.methods = new HashMap<>();
-        this.operatorOverloads = new HashMap<>();
+        this.operatorOverloads = new EnumMap<>(BananaOperator.class);
     }
 
     protected BananaObject(BananaObject copyMethodsFrom) {
@@ -22,18 +23,12 @@ public abstract class BananaObject {
     }
 
     protected BananaMethod createFunction(String name, BananaMethodCallback callback) {
-        if (methods.containsKey(name)) {
-            throw new IllegalStateException("Method with name " + name + " already exists");
-        }
         BananaMethod method = new BananaMethod(name, callback);
         methods.put(name, method);
         return method;
     }
 
     protected BananaMethod createOperatorOverload(BananaOperator operator, BananaMethodCallback callback) {
-        if (operatorOverloads.containsKey(operator)) {
-            throw new IllegalStateException("Operator overload for operator " + operator + " already exists");
-        }
         BananaMethod method = new BananaMethod(operator.getOverloadedMethodName(), callback);
         operatorOverloads.put(operator, method);
         return method;
@@ -64,6 +59,6 @@ public abstract class BananaObject {
     }
 
     public static BananaObject getBaseInstance() {
-        return null;
+        throw new UnsupportedOperationException("getBaseInstance() must be overriden in subclass.");
     }
 }

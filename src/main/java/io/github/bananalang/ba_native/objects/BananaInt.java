@@ -30,6 +30,9 @@ public class BananaInt extends BananaObject {
         createOperatorOverload(BananaOperator.ADD, this::operatorAdd)
             .addOverload(BananaInt.class, BananaInt.class)
             .addOverload(BananaDecimal.class, BananaDecimal.class);
+        createOperatorOverload(BananaOperator.EQUALS, this::operatorEquals)
+            .addOverload(BananaBool.class, BananaInt.class)
+            .addOverload(BananaBool.class, BananaDecimal.class);
     }
 
     protected BananaInt(BigInteger value) {
@@ -55,6 +58,10 @@ public class BananaInt extends BananaObject {
         return new BananaInt(BigInteger.valueOf(value));
     }
 
+    public BigInteger getValue() {
+        return value;
+    }
+
     @Override
     public String toString() {
         return value.toString();
@@ -68,6 +75,16 @@ public class BananaInt extends BananaObject {
             return valueOf(value.add(((BananaInt)other).value));
         } else {
             return BananaDecimal.valueOf(value.doubleValue() + ((BananaDecimal)other).value);
+        }
+    }
+
+    protected BananaObject operatorEquals(BananaObject this_, BananaObject[] args) {
+        BigInteger value = ((BananaInt)this_).value;
+        BananaObject other = args[0];
+        if (other instanceof BananaInt) {
+            return BananaBool.valueOf(value.equals(((BananaInt)other).value));
+        } else {
+            return BananaBool.valueOf(value.doubleValue() == ((BananaDecimal)other).value);
         }
     }
 }
