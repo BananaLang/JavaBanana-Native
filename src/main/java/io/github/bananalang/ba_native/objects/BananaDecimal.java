@@ -29,7 +29,7 @@ public class BananaDecimal extends BananaObject {
 
     // Operator overloads
     protected BananaDecimal operatorAdd(BananaObject this_, BananaObject[] args) {
-        double value = ((BananaDecimal)this).value;
+        double value = ((BananaDecimal)this_).value;
         BananaObject other = args[0];
         if (other instanceof BananaDecimal) {
             return valueOf(value + ((BananaDecimal)other).value);

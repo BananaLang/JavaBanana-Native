@@ -8,6 +8,7 @@ public class BananaInt extends BananaObject {
     public static final BananaInt ZERO, ONE, TWO;
 
     static {
+        METHODS = new BananaInt();
         CACHE = new BananaInt[256];
         for (int i = 0; i < 256; i++) {
             CACHE[i] = new BananaInt(BigInteger.valueOf(i - 128));
@@ -15,7 +16,6 @@ public class BananaInt extends BananaObject {
         ZERO = CACHE[128];
         ONE = CACHE[129];
         TWO = CACHE[130];
-        METHODS = new BananaInt();
     }
 
     public final BigInteger value;
@@ -58,7 +58,7 @@ public class BananaInt extends BananaObject {
 
     // Operator overloads
     protected BananaObject operatorAdd(BananaObject this_, BananaObject[] args) {
-        BigInteger value = ((BananaInt)this).value;
+        BigInteger value = ((BananaInt)this_).value;
         BananaObject other = args[0];
         if (other instanceof BananaInt) {
             return valueOf(value.add(((BananaInt)other).value));
