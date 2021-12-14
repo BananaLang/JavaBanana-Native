@@ -30,6 +30,15 @@ public class BananaInt extends BananaObject {
         createOperatorOverload(BananaOperator.ADD, this::operatorAdd)
             .addOverload(BananaInt.class, BananaInt.class)
             .addOverload(BananaDecimal.class, BananaDecimal.class);
+        createOperatorOverload(BananaOperator.SUBTRACT, this::operatorSubtract)
+            .addOverload(BananaInt.class, BananaInt.class)
+            .addOverload(BananaDecimal.class, BananaDecimal.class);
+        createOperatorOverload(BananaOperator.MULTIPLY, this::operatorMultiply)
+            .addOverload(BananaInt.class, BananaInt.class)
+            .addOverload(BananaDecimal.class, BananaDecimal.class);
+        createOperatorOverload(BananaOperator.DIVIDE, this::operatorDivide)
+            .addOverload(BananaInt.class, BananaInt.class)
+            .addOverload(BananaDecimal.class, BananaDecimal.class);
         createOperatorOverload(BananaOperator.EQUALS, this::operatorEquals)
             .addOverload(BananaBool.class, BananaInt.class)
             .addOverload(BananaBool.class, BananaDecimal.class);
@@ -75,6 +84,36 @@ public class BananaInt extends BananaObject {
             return valueOf(value.add(((BananaInt)other).value));
         } else {
             return BananaDecimal.valueOf(value.doubleValue() + ((BananaDecimal)other).value);
+        }
+    }
+
+    protected BananaObject operatorSubtract(BananaObject this_, BananaObject[] args) {
+        BigInteger value = ((BananaInt)this_).value;
+        BananaObject other = args[0];
+        if (other instanceof BananaInt) {
+            return valueOf(value.subtract(((BananaInt)other).value));
+        } else {
+            return BananaDecimal.valueOf(value.doubleValue() - ((BananaDecimal)other).value);
+        }
+    }
+
+    protected BananaObject operatorMultiply(BananaObject this_, BananaObject[] args) {
+        BigInteger value = ((BananaInt)this_).value;
+        BananaObject other = args[0];
+        if (other instanceof BananaInt) {
+            return valueOf(value.multiply(((BananaInt)other).value));
+        } else {
+            return BananaDecimal.valueOf(value.doubleValue() * ((BananaDecimal)other).value);
+        }
+    }
+
+    protected BananaObject operatorDivide(BananaObject this_, BananaObject[] args) {
+        BigInteger value = ((BananaInt)this_).value;
+        BananaObject other = args[0];
+        if (other instanceof BananaInt) {
+            return valueOf(value.divide(((BananaInt)other).value));
+        } else {
+            return BananaDecimal.valueOf(value.doubleValue() / ((BananaDecimal)other).value);
         }
     }
 
